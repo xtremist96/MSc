@@ -1,0 +1,270 @@
+1. WAP to solve Towers of Hanoi problem.
+			Program:-
+			move(1,X,Y,_):- write('Move top disk from '),
+			 write(X),
+			 write(' to '),
+			 write(Y),nl.
+			move(N,X,Y,Z):- N>1,
+			 M is N-1,
+			 move(M,X,Z,Y),
+			 move(1,X,Y,_),
+			 move(M,Z,Y,X).
+			Output:-
+			41 ?- [q5].
+			% q5 compiled 0.00 sec, 3 clauses
+			true.
+			42 ?- move(2,left_peg,right_peg, centre_peg).
+			Move top disk from left_peg to centre_peg
+			Move top disk from left_peg to right_peg
+			Move top disk from centre_peg to right_peg
+			true .
+			43 ?- move(3,left_peg,right_peg, centre_peg).
+			Move top disk from left_peg to right_peg
+			Move top disk from left_peg to centre_peg
+			Move top disk from right_peg to centre_peg
+			Move top disk from left_peg to right_peg
+			Move top disk from centre_peg to left_peg
+			Move top disk from centre_peg to right_peg
+			Move top disk from left_peg to right_peg
+			true .
+
+
+2. Given the following facts-
+ Steve only likes easy course.
+ Science course are hard.
+ All the courses in the basket weaving department are easy.
+ BK301 is a basket weaving course.
+ WAP to find “What course would Steve like?”
+ 
+		 Program:-
+		likes(steve,X):- easy(X).
+		hard(X):- science(X).
+		easy(X):- baskweav(X).
+		baskweav(bk301).
+		Output:-
+		% q6 compiled 0.00 sec, 5 clauses
+		true.
+		47 ?- likes(steve,X).
+		X = bk301.
+		48 ?-
+
+3. Given the following facts-
+ All people who are not poor and are smart are happy.
+ Those people who read are not stupid but smart.
+ John could read and is wealthy.
+ Happy people have exciting lives.
+ WAP to prove “John has an exciting life”.
+			 Program:-
+			happy(X):-wealthy(X),smart(X).
+			smart(X):-reads(X).
+			wealthy(john).
+			reads(john).
+			exciting_life(A):-happy(A).
+			Output:-
+			51 ?- [q7].
+			% q7 compiled 0.00 sec, 6 clauses
+			true.
+			52 ?- exciting_life(john).
+			true.
+
+ 
+ 
+4. Given the following facts-
+ John likes all food.
+ Apples are food.
+ Chicken is food.
+ Anything anyone eats & isn’t killed by is food.
+ Bill eats Peanuts and is still alive.
+ Sue eats everything Bill eats.
+ WAP to prove that “John likes peanuts” and find “what food does Sue eat?”
+		Program:-
+		likes(john,Y):- food(Y).
+		food(apple).
+		food(chicken).
+		food(Y):- eat(X,Y),alive(X,Y).
+		alive(bill,peanut).
+		eat(bill,peanut).
+		eat(sue,Y):- eat(bill,Y).
+		Output:-
+		1 ?- [q8].
+		% q8 compiled 0.00 sec, 8 clauses
+		true.
+		2 ?- likes(john,peanut).
+		true .
+		3 ?- eat(sue,X).
+		X = peanut.
+
+
+
+5. Given the following factsMarcus was a man.
+Marcus was a Pompeian.
+All Pompeian’s were Roman.
+Caesar was a ruler.
+All Roman were either loyal to Caesar or hated him.
+Everyone is loyal to someone.
+People only try to assassinate ruler they are not loyal to.
+Marcus try to assassinate Caesar.
+ All men are people.
+ WAP to find “Is Marcus loyal to Caesar?”, “Does Marcus hate Caesar?”
+			Program:-
+				man(marcus).
+				pompeian(marcus).
+				roman(X):- pompeian(X).
+				ruler(caesar).
+				hate(X,caesar):- roman(X),not(loyalto(X,caesar)).
+				loyalto(X,Y):- man(X),man(Y).
+				loyalto(X,Y):- person(X),ruler(Y),not(tryassasinate(X,Y)).
+				tryassasinate(marcus,caesar).
+				person(X):- man(X).
+				Output:-
+				11 ?- [q10].
+				% q10 compiled 0.00 sec, 10 clauses
+				true.
+				12 ?- loyalto(marcus,caesar).
+				false.
+				13 ?- hate(marcus,caesar).
+				true.
+ 
+6. Given the following facts-
+ Anyone passing his history examination & winning the lottery is happy.
+ Anyone who studies or is lucky can pass all his exam.
+ John didn’t study.
+ John is lucky.
+ Anyone who is lucky wins the lottery.
+ WAP to prove “John is happy”
+		Program:-
+			happy(X):-pass(X,history),win(X,lottery).
+			pass(X,_):-study(X);lucky(X).
+			lucky(john).
+			study(not(john)).
+			win(X,lottery):-lucky(X).
+			Output:-
+			14 ?- [q11].
+			% q11 compiled 0.00 sec, 6 clauses
+			true.
+			15 ?- happy(A).
+			A = john.
+			16 ?- happy(john).
+			true.
+
+7. Given the following knowledge base:
+x: y: cat(x) ? fish(y) -> likes-to-eat (x, y)
+x: calico(x) -> cat(x)
+x: tuna(y) -> fish(y)
+tuna(Charlie)
+tuna(Herb)
+calico(Pussy)
+WAP to represent the knowledge base in prolog implementation and determine “what does
+pussy likes to eat?”
+		Program:-
+			likes_to_eat(X,Y):-cat(X),fish(Y).
+			cat(X):-calico(X).
+			fish(Y):- tuna(Y).
+			tuna(charlie).
+			tuna(herb).
+			calico(pussy).
+			Output:-
+			17 ?- [q12].
+			% q12 compiled 0.00 sec, 7 clauses
+			true.
+			18 ?- likes_to_eat(pussy,X).
+			X = charlie ;
+			X = herb.
+
+8. Given the following factsSam likes all Indian mild food.
+Sam likes all Chinese food.
+Sam likes all Italian food.
+Sam likes chips.
+Curry, dal, tandoori, kurma are Indian food.
+Dal, tandoori, kurma are Indian mild food.
+chowmein, chopsuey, sweetandsour are Chinese food.
+pizza and spaghetti are Italian food.
+WAP to find: a) What foods does Sam like?, b) Does Sam like Curry?, c) Does Sam
+like Chips?
+			Program:-
+			likes(sam,Food):- indian(Food),mild(Food).
+			likes(sam,Food):- chinese(Food).
+			likes(sam,Food):- italian(Food).
+			likes(sam,chips).
+			indian(curry).
+			indian(dahl).
+			indian(tandoori).
+			indian(kurma).
+			mild(dahl).
+			mild(tandoori).
+			mild(kurma).
+			chinese(chow_mein).
+			chinese(chop_suey).
+			chinese(sweet_and_sour).
+			italian(pizza).
+			italian(spaghetti).
+			Output:-
+			1 ?- [q13].
+			% q13 compiled 0.00 sec, 17 clauses
+			true.
+			2 ?- likes(sam,Food).
+			Food = dahl ;
+			Food = tandoori ;
+			Food = kurma ;
+			Food = chow_mein ;
+			Food = chop_suey ;
+			Food = sweet_and_sour ;
+			Food = pizza ;
+			Food = spaghetti ;
+			Food = chips.
+			3 ?- likes(sam,curry).
+			false.
+			4 ?- likes(sam,chips).
+			true.
+9. WAP for Pre-order, In-order and Post-order traversal of binary trees.
+			Program:-
+			tree(M):-M=tree(5,tree(4,tree(2,nil,nil),tree(10,nil,nil)),tree(3,nil,nil)).
+			preorder(tree(X,L,R),Xs) :-
+			 preorder(L,Ls),
+			 preorder(R,Rs),
+			 append([X|Ls],Rs,Xs).
+			 preorder(_,[]).
+			inorder(nil, []).
+			inorder(tree(X, Left, Right), R) :-
+			 inorder(Left,R1),
+			 inorder(Right,R2),
+			 append(R1,[X|R2],R).
+			postorder(tree(X, L, R), Xs):-
+			 postorder(L, Ls),
+			 postorder(R, Rs),
+			 append(Ls, Rs, Xs1),
+			 append(Xs1, [X], Xs).
+			 postorder(_, []).
+			Output:-
+			9 ?- tree(M), inorder(M,L).
+			M = tree(5, tree(4, tree(2, nil, nil), tree(10, nil, nil)), tree(3, nil, nil)),
+			L = [2, 4, 10, 5, 3].
+			11 ?- tree(M), preorder(M,L).
+			M = tree(5, tree(4, tree(2, nil, nil), tree(10, nil, nil)), tree(3, nil, nil)),
+			L = [5, 4, 2, 10, 3] .
+			12 ?- tree(M), postorder(M,L).
+			M = tree(5, tree(4, tree(2, nil, nil), tree(10, nil, nil)), tree(3, nil, nil)),
+			L = [2, 10, 4, 3, 5]
+
+10.WAP to check whether a given element belongs to a binary tree. 
+			Program:-
+			mem_btree(X,b_tree(X,L,R)).
+			mem_btree(X,b_tree(Y,L,R)):- mem_btree(X,L).
+			mem_btree(X,b_tree(Y,L,R)):-mem_btree(X,R).
+			Output:-
+			13 ?- [q16].
+			% q16 compiled 0.02 sec, 61 clauses
+			true.
+			14 ?-
+			mem_btree(X,b_tree(35,b_tree(25,b_tree(10,void,void),void),b_tree(62,void,void))).
+			X = 35 ;
+			X = 25 ;
+			X = 10 ;
+			X = 62 ;
+			false.
+			15 ?-
+			mem_btree(25,b_tree(35,b_tree(25,b_tree(10,void,void),void),b_tree(62,void,void))).
+			true .
+			16 ?-
+			mem_btree(65,b_tree(35,b_tree(25,b_tree(10,void,void),void),b_tree(62,void,void))).
+			false.
